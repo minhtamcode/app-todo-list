@@ -12,9 +12,8 @@ import EditorDoneIcon from '@atlaskit/icon/glyph/editor/done';
 
 const ButtonStyled = styled(Button)`
   text-align: left;
-    
     .task-edit {
-        width: calc(100% - 230px);
+        width: calc(100% - 200px);
         position: absolute;
         top: 15px;
     }
@@ -24,6 +23,8 @@ const ButtonStyled = styled(Button)`
         border-bottom: 1px dashed;
         border-radius: 0;
         float: left;
+        font-size: 20px;
+        font-family: "Mulish",sans-serif;
     }
 
 
@@ -136,16 +137,14 @@ export default function Todo({ todo, onCheckBtnClick, onRemoveBtnClick, onUnChec
               </div>
             }>
           <div className='task-edit'>
-                  <Textfield placeholder = "neue Aufgabe..."
-                    className='list-task'
-                    value = { todo.name }
-                    onChange = {(e) => onTaskChange(todo.id, e.target.value)}
-                    >
-                  </Textfield>
-                    <span className='done-icon' onClick={() => onInputComlpeted(todo.id)}>
-                        <EditorDoneIcon primaryColor='#fff' />
-                    </span>
-                
+            <Textfield placeholder = "neue Aufgabe..."
+              className='list-task'
+              value = { todo.name }
+              onChange = {(e) => onTaskChange(todo.id, e.target.value)}
+              />
+              <span className='done-icon' onClick={() => onInputComlpeted(todo.id)}>
+                  <EditorDoneIcon primaryColor='#fff' />
+              </span>    
           </div>
                 <span className='task-title' onClick={() => onInputStartEditor(todo.id)}>
                   { todo.name }
