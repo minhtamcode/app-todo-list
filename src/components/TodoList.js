@@ -1,7 +1,7 @@
 import React from "react";
 import Todo from "./Todo";
 
-export default function TodoList({ todoList, onCheckBtnClick, onRemoveBtnClick, onUnCheckBtnClick, onTaskChange, onInputComlpeted,onInputStartEditor}) {
+export default function TodoList({ todoList, onCheckBtnClick, onRemoveBtnClick, onUnCheckBtnClick, onTaskChange, onInputCompleted,onInputStartEditor}) {
   return (
     <>
     {todoList.map((todo) => (
@@ -11,7 +11,7 @@ export default function TodoList({ todoList, onCheckBtnClick, onRemoveBtnClick, 
         onRemoveBtnClick={onRemoveBtnClick} 
         onUnCheckBtnClick={onUnCheckBtnClick} 
         onTaskChange={onTaskChange} 
-        onInputComlpeted={onInputComlpeted} 
+        onInputCompleted={onInputCompleted} 
         onInputStartEditor={onInputStartEditor}/>
       ))}
     </>

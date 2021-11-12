@@ -44,8 +44,7 @@ function App() {
       setTodoList([
         ...todoList,
         { id: v4(), name: '', isCompleted: false ,isEdited: false},
-        
-      ]);
+        ]);
     },
     [todoList]
   );
@@ -53,7 +52,7 @@ function App() {
   const onCheckBtnClick = useCallback((id) => {
     setTodoList((prevState) =>
       prevState.map((todo) =>
-        todo.id === id ? { ...todo, isCompleted: true } : todo
+        todo.id === id ? { ...todo, isCompleted: true} : todo
       )
     );
   }, []);
@@ -75,15 +74,21 @@ function App() {
     );
   }, []);
 
-  const onInputComlpeted = useCallback((id) => {
-      setTodoList(prevState => prevState.map(todo => todo.id === id && todo.name !== '' ? {...todo, isEdited: true } : todo))
-  }, []);
-  const onInputStartEditor = useCallback((id) => {
-    setTodoList(prevState => prevState.map(todo => todo.id === id ? {...todo, isEdited: false } : todo))
+  const onInputCompleted = useCallback((id) => {
+      setTodoList(prevState => prevState.map(todo => todo.id === id && todo.name !== '' ? { ...todo, isEdited: true} : todo))
+      // console.log(1)
   }, []);
 
+
+  const onInputStartEditor = useCallback((id) => {
+    setTodoList(prevState => prevState.map(todo => todo.id === id ? {...todo, isEdited: false } : todo))
+    // console.log(1)
+  }, []);
+
+  
   const onTaskChange = useCallback((id, name) => {
-      setTodoList(prevState => prevState.map(todo => todo.id === id ? {...todo,  name: name } : todo))
+      // console.log(1)
+      setTodoList(prevState => prevState.map(todo => todo.id === id ? {...todo, name:name } : todo))
   });
 
   return (
@@ -92,7 +97,7 @@ function App() {
     <div className="checklist-editor">
     <h2>Checkliste Hochzeit</h2>
       <div className="checklist-content">
-      <Textfield
+      {/* <Textfield
         name='add-todo'
         placeholder='Thêm việc cần làm...'
         elemAfterInput={
@@ -107,12 +112,12 @@ function App() {
         css={{ padding: "2px 4px 2px" }}
         value={textInput}
         onChange={onTextInputChange}
-      ></Textfield>
+      ></Textfield> */}
       <TodoList todoList={todoList} 
       onCheckBtnClick={onCheckBtnClick} 
       onRemoveBtnClick={onRemoveBtnClick} 
       onUnCheckBtnClick={onUnCheckBtnClick} 
-      onInputComlpeted={onInputComlpeted} 
+      onInputCompleted={onInputCompleted} 
       onInputStartEditor={onInputStartEditor}
       onTaskChange={onTaskChange}/>
     </div>

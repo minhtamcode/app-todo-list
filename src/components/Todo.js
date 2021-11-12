@@ -8,24 +8,36 @@ import Textfield from "@atlaskit/textfield";
 import EditorDoneIcon from '@atlaskit/icon/glyph/editor/done';
 
 
-
-
-const ButtonStyled = styled(Button)`
+const ButtonStyled = styled(Button)
+`
   text-align: left;
-    .task-edit {
-        width: calc(100% - 200px);
-        position: absolute;
-        top: 15px;
+  .task-edit {
+      width: calc(100% - 200px);
+      position: absolute;
+      top: 20px;
+  }
+  .list-task {
+      width: 100%;
+      border: none;
+      border-bottom: 1px dashed;
+      border-radius: 0;
+      padding:0;
+      float: left;
+      font-size: 20px;
+      font-family: "Mulish",sans-serif;
+  }
+
+  ${(p) => p.isEdited ? css`
+      .task-edit{
+          display: none;
+          opacity: 0;
+      }
+    `: css`
+      .task-title{
+        display: none;
+        opacity:0;
     }
-    .list-task {
-        width: 100%;
-        border: none;
-        border-bottom: 1px dashed;
-        border-radius: 0;
-        float: left;
-        font-size: 20px;
-        font-family: "Mulish",sans-serif;
-    }
+      `}
 
 
   &,
@@ -41,7 +53,6 @@ const ButtonStyled = styled(Button)`
       }
       `}
   }
-
   .check-icon{
       span {
         svg {
@@ -53,6 +64,9 @@ const ButtonStyled = styled(Button)`
     }
     transition: transform 1s;
   }
+
+
+
 
   &:hover {
     .check-icon {
@@ -108,16 +122,17 @@ const ButtonStyled = styled(Button)`
             }
         `}
     }
-}
+  }
 `;
 
-export default function Todo({ todo, onCheckBtnClick, onRemoveBtnClick, onUnCheckBtnClick, onTaskChange, onInputComlpeted,onInputStartEditor }) {
+export default function Todo({ todo, onCheckBtnClick, onRemoveBtnClick, onUnCheckBtnClick, onTaskChange, onInputCompleted,onInputStartEditor }) {
   return (
       <>
         <ButtonStyled 
-            shouldFitContainer
+            // shouldFitContainer
             className="task"
             isCompleted={todo.isCompleted}
+            isEdited={todo.isEdited}
             iconBefore={
               !todo.isCompleted ? (
                 <span className='check-icon' onClick={() => onCheckBtnClick(todo.id)}>
@@ -137,12 +152,13 @@ export default function Todo({ todo, onCheckBtnClick, onRemoveBtnClick, onUnChec
               </div>
             }>
           <div className='task-edit'>
-            <Textfield placeholder = "neue Aufgabe..."
+            <Textfield 
+              placeholder = "neue Aufgabe..."
               className='list-task'
               value = { todo.name }
               onChange = {(e) => onTaskChange(todo.id, e.target.value)}
               />
-              <span className='done-icon' onClick={() => onInputComlpeted(todo.id)}>
+              <span className='done-icon' onClick={() => onInputCompleted(todo.id)}>
                   <EditorDoneIcon primaryColor='#fff' />
               </span>    
           </div>
@@ -154,25 +170,4 @@ export default function Todo({ todo, onCheckBtnClick, onRemoveBtnClick, onUnChec
     
   );
 }
-
-
-// export default function Todo({ todo, onCheckBtnClick }) {
-//   const [editValue, setEditValue] = useState('');
-//   return (
-//     <div
-//       // style={{
-//       //   padding: `${gridSize}px ${gridSize}px ${gridSize * 6}px`,
-//       // }}
-//     >
-//       <InlineEditableTextfield
-//         className="task"
-//         testId="editable-text-field"
-//         defaultValue={editValue}
-//         onConfirm={(value) => setEditValue(value)}
-//         placeholder={todo.name}
-//         //hideActionButtons
-//       />
-//     </div>
-//   );
-// };
 
