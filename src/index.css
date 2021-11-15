@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300&display=swap');
+
 body {
   font-family: "Mulish",sans-serif;
   display: flex;
@@ -106,6 +108,7 @@ box-shadow: 1px 1px 5px rgb(0 0 0 / 40%);
   text-transform: uppercase;
   line-height: 20px;
   font-weight: normal;
+  cursor: pointer;
 }
 
 .check-icon{
@@ -125,8 +128,16 @@ box-shadow: 1px 1px 5px rgb(0 0 0 / 40%);
     transition: all 0.7s;
 }
 
-.checklist-editor .task.task-group {
+.checklist-editor .task-group {
+  position: relative;
+  width: 100%;
+  min-height: 80px;
   padding-left: 18px;
+  padding-right: 75px;
+  box-shadow: 0 0 2px rgb(0 0 0 / 20%);
+  margin: 3px 0;
+  transition: all 0.3s ease-out;
+  background: #fff;
 }
 
 
@@ -147,7 +158,12 @@ box-shadow: 1px 1px 5px rgb(0 0 0 / 40%);
   background: #fff;
 }
 
-.checklist-editor .task .task-title{
+.checklist-editor .task-group:hover {
+  box-shadow: 0 0 3px rgb(0 0 0 / 50%);
+  background: #fff;
+}
+
+.checklist-editor .task-title-item{
     position: relative;
     display: inline-block;
     margin-top: 30px;
@@ -155,12 +171,25 @@ box-shadow: 1px 1px 5px rgb(0 0 0 / 40%);
     font-size: 20px;
     line-height: 1.1;
     width: 100%;
-    font-family: "Mulish",sans-serif;
     color: #000;
     cursor: text;
 }
 
-.checklist-editor .task .move-icon {
+.checklist-editor .task-title-group{
+  position: relative;
+    display: inline-block;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    font-size: 28px;
+    line-height: 1.1;
+    width: 100%;
+    color: #000;
+    cursor: text;
+    font-family: "Playfair Display",Georgia,Cambria,Times New Roman,Times,serif;
+    font-weight: bold;
+}
+
+.checklist-editor .task .move-icon, .checklist-editor .task-group .move-icon {
   position: absolute;
   display: block;
   width: 35px;
@@ -176,7 +205,7 @@ box-shadow: 1px 1px 5px rgb(0 0 0 / 40%);
 }
 
 
-.checklist-editor .task .remove-icon {
+.checklist-editor .task .remove-icon,.checklist-editor .task-group .remove-icon {
   position: absolute;
   display: block;
   width: 35px;
@@ -222,5 +251,93 @@ code {
   width: 25px;
   height: 25px;
   position: absolute;
-  top: 70%;
+  top: 20%;
+}
+
+.checklist-editor .task .list-task {
+  width: 100%;
+  border: none;
+  border-bottom: 1px dashed;
+  border-radius: 0;
+  padding:0;
+  float: left;
+  background-color: #fff;
+}
+
+
+.checklist-editor .task-group .list-task {
+  width: 100%;
+  border: none;
+  border-bottom: 1px dashed;
+  border-radius: 0;
+  padding:0;
+  float: left;
+  background-color: #fff;
+}
+
+.task-edit-item {
+  width: calc(100% - 190px);
+  position: absolute;
+  top: 30px;
+}
+
+
+.task-edit-group {
+  width: calc(100% - 130px);
+  position: absolute;
+  top: 25px;
+}
+
+#task-input-item{
+  padding: 0;
+  height: 22px;
+  font-size: 20px;
+  font-family: "Mulish",sans-serif;
+  background-color: #fff;
+}
+
+
+#task-input-group{
+  padding: 0;
+  height: 30px;
+  font-size: 28px;
+  font-family: "Playfair Display",Georgia,Cambria,Times New Roman,Times,serif;
+  font-weight: bold;
+  background-color: #fff;
+}
+
+
+.save-new-checklist {
+  /* position: -webkit-sticky; */
+  position: sticky;
+  bottom: 5px;
+}
+
+.button{
+  font-family: "Mulish",sans-serif;
+    color: #fff;
+    background: #00324A;
+    border: 1px solid #00324A;
+    border-radius: 0;
+    padding: 15px 35px;
+    display: inline-block;
+    font-size: 15px;
+    /* font-size: 1.5rem; */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    line-height: 1.1;
+    transition: 0.8s;
+    text-align: center;
+    width: auto;
+    opacity: 1.0;
+    z-index: 99;
+}
+
+.button:hover{
+  color: #00324A;
+  background: rgba(0,50,74,0);
 }

@@ -8,7 +8,6 @@ const TODO_APP_STORAGE_KEY = "TODO_APP";
 
 function App() {
   const [todoList, setTodoList] = useState([]);
-  const [textInput, setTextInput] = useState("");
 
   useEffect(() => {
     const storagedTodoList = localStorage.getItem(TODO_APP_STORAGE_KEY);
@@ -21,21 +20,17 @@ function App() {
     localStorage.setItem(TODO_APP_STORAGE_KEY, JSON.stringify(todoList));
   }, [todoList]);
 
-  const onTextInputChange = useCallback((e) => {
-    setTextInput(e.target.value);
-  }, []);
 
-  const onAddBtnClick = useCallback(
+
+  const onAddBtnClickGroup = useCallback(
     (e) => {
       // them text input vao danh sach todoList
       setTodoList([
-        { id: v4(), name: textInput, isCompleted: false ,isEdited: false},
         ...todoList,
+        { id: v4(), name: '', isGroup: true, isCompleted: false ,isEdited: false},
       ]);
-
-      setTextInput("");
     },
-    [textInput, todoList]
+    [todoList]
   );
 
   const onAddBtnClickItem = useCallback(
@@ -43,7 +38,7 @@ function App() {
       // them text input vao cuoi danh sach todoList
       setTodoList([
         ...todoList,
-        { id: v4(), name: '', isCompleted: false ,isEdited: false},
+        { id: v4(), name: '', isItem: true, isCompleted: false ,isEdited: false},
         ]);
     },
     [todoList]
@@ -127,11 +122,16 @@ function App() {
         onClick={onAddBtnClickItem}
         className="add-item">+
       </Button>
-      <a href="#" className="add-group">
+      <div className="add-group" onClick={onAddBtnClickGroup}>
         <i className="tool-plus-button">+</i>
         neue Überschrift
-      </a>
+      </div>
     </div>
+    </div>
+    <div class="save-new-checklist">
+      <a class="button checklist-save-button">
+      Checkliste speichern
+      </a>
     </div>
     </div>
     </>

@@ -11,31 +11,29 @@ import EditorDoneIcon from '@atlaskit/icon/glyph/editor/done';
 const ButtonStyled = styled(Button)
 `
   text-align: left;
-  .task-edit {
-      width: calc(100% - 200px);
-      position: absolute;
-      top: 20px;
-  }
-  .list-task {
-      width: 100%;
-      border: none;
-      border-bottom: 1px dashed;
-      border-radius: 0;
-      padding:0;
-      float: left;
-      font-size: 20px;
-      font-family: "Mulish",sans-serif;
-  }
-
   ${(p) => p.isEdited ? css`
-      .task-edit{
+      .task-edit-item{
           display: none;
           opacity: 0;
       }
-    `: css`
-      .task-title{
+      .task-edit-group{
         display: none;
-        opacity:0;
+        opacity: 0;
+    }
+    `: css`
+      .task-title-item{
+        display: none;
+        opacity: 0;
+      }
+      .task-title-group{
+        display: none;
+        opacity: 0;
+      }
+      .task-edit-item{
+        z-index: 0;
+      }
+      .task-edit-group{
+        z-index: 0;
     }
       `}
 
@@ -45,7 +43,7 @@ const ButtonStyled = styled(Button)
     ${(p) =>
       p.isCompleted &&
       css`
-      .task-title{
+      .task-title-item{
         text-decoration: line-through;
       }
       .check-icon{
@@ -125,21 +123,29 @@ const ButtonStyled = styled(Button)
   }
 `;
 
-export default function Todo({ todo, onCheckBtnClick, onRemoveBtnClick, onUnCheckBtnClick, onTaskChange, onInputCompleted,onInputStartEditor }) {
+export default function Todo({ todo, onCheckBtnClick, onRemoveBtnClick, onUnCheckBtnClick, onTaskChange, onInputCompleted,onInputStartEditor,onAddBtnClickGroup }) {
   return (
       <>
         <ButtonStyled 
-            // shouldFitContainer
-            className="task"
+            shouldFitContainer
+            className={
+              todo.isGroup ? (
+                  'task-group'
+              ) : (
+                 'task'
+                  )
+          }
             isCompleted={todo.isCompleted}
             isEdited={todo.isEdited}
-            iconBefore={
+            isItem={todo.isItem}
+            isGroup={todo.isGroup}
+            iconBefore={todo.isItem && (
               !todo.isCompleted ? (
                 <span className='check-icon' onClick={() => onCheckBtnClick(todo.id)}>
                 </span>
               ) : (<span className='check-icon' onClick={() => onUnCheckBtnClick(todo.id)}>
                 <CheckIcon primaryColor='#4fff4f' />
-                   </span>)
+                   </span>))
             }
             iconAfter={
               <div className='last-icon'>
@@ -151,18 +157,39 @@ export default function Todo({ todo, onCheckBtnClick, onRemoveBtnClick, onUnChec
                 </span>
               </div>
             }>
-          <div className='task-edit'>
+          <div className={
+                    todo.isGroup ? (
+                        'task-edit-group'
+                    ) : (
+                       'task-edit-item'
+                        )
+                }>
             <Textfield 
               placeholder = "neue Aufgabe..."
               className='list-task'
               value = { todo.name }
               onChange = {(e) => onTaskChange(todo.id, e.target.value)}
+              id={
+                  todo.isGroup ? (
+                      'task-input-group'
+                  ) : (
+                    'task-input-item'
+                      )
+                }
+              autoFocus ={true}
               />
               <span className='done-icon' onClick={() => onInputCompleted(todo.id)}>
                   <EditorDoneIcon primaryColor='#fff' />
               </span>    
           </div>
-                <span className='task-title' onClick={() => onInputStartEditor(todo.id)}>
+                <span className={
+                      todo.isGroup ? (
+                        'task-title-group'
+                      ) : (
+                        'task-title-item'
+                          )
+                    } 
+                      onClick={() => onInputStartEditor(todo.id)}>
                   { todo.name }
                 </span>
       </ButtonStyled>
