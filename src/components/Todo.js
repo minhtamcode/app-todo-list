@@ -8,6 +8,7 @@ import Textfield from "@atlaskit/textfield";
 import EditorDoneIcon from '@atlaskit/icon/glyph/editor/done';
 
 
+
 const ButtonStyled = styled(Button)
 `
   text-align: left;
@@ -64,8 +65,6 @@ const ButtonStyled = styled(Button)
   }
 
 
-
-
   &:hover {
     .check-icon {
       display: inline-block;
@@ -87,7 +86,6 @@ const ButtonStyled = styled(Button)
               .close-icon {opacity: 1;}
               span {
                 svg {
-                    display:block;
                     opacity: 1;
                     width: 38px;
                     height: 38px;
@@ -101,7 +99,7 @@ const ButtonStyled = styled(Button)
                 border-radius: 50%;
                 display: inline-block;
                 box-shadow: inset 0 0 0 2px #4fff4f;
-                  span {color: #fff;}
+                span {color: #fff;}
                 text-decoration: none;
                 -webkit-transition: background 0.1s ease-out,box-shadow 0.15s cubic-bezier(0.47,0.03,0.49,1.38);
                 // transition: background 0.1s ease-out,box-shadow 0.15s cubic-bezier(0.47,0.03,0.49,1.38);
@@ -165,7 +163,13 @@ export default function Todo({ todo, onCheckBtnClick, onRemoveBtnClick, onUnChec
                         )
                 }>
             <Textfield 
-              placeholder = "neue Aufgabe..."
+              placeholder = {
+                todo.isGroup ? (
+                    'Überschrift...'
+                ) : (
+                   'neue Aufgabe...'
+                    )
+            }
               className='list-task'
               value = { todo.name }
               onChange = {(e) => onTaskChange(todo.id, e.target.value)}

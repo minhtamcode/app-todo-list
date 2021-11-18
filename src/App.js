@@ -3,6 +3,7 @@ import Textfield from "@atlaskit/textfield";
 import Button from "@atlaskit/button";
 import { useCallback, useState, useEffect } from "react";
 import { v4 } from "uuid";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const TODO_APP_STORAGE_KEY = "TODO_APP";
 
@@ -21,13 +22,18 @@ function App() {
   }, [todoList]);
 
 
+  const onDragEnd = ({oldIndex, newIndex}) => {
+    this.setState(({todo}) => ({
+      todoList: (todo, oldIndex, newIndex),
+    }));
+  };
 
   const onAddBtnClickGroup = useCallback(
     (e) => {
       // them text input vao danh sach todoList
       setTodoList([
         ...todoList,
-        { id: v4(), name: '', isGroup: true, isCompleted: false ,isEdited: false},
+        { id: v4(), name: 'Überschrift...', isGroup: true, isCompleted: false ,isEdited: false},
       ]);
     },
     [todoList]
@@ -38,7 +44,7 @@ function App() {
       // them text input vao cuoi danh sach todoList
       setTodoList([
         ...todoList,
-        { id: v4(), name: '', isItem: true, isCompleted: false ,isEdited: false},
+        { id: v4(), name: 'neue Aufgabe...', isItem: true, isCompleted: false ,isEdited: false},
         ]);
     },
     [todoList]
@@ -51,7 +57,6 @@ function App() {
       )
     );
   }, []);
-
 
   const onUnCheckBtnClick = useCallback((id) => {
     setTodoList((prevState) =>
@@ -92,22 +97,6 @@ function App() {
     <div className="checklist-editor">
     <h2>Checkliste Hochzeit</h2>
       <div className="checklist-content">
-      {/* <Textfield
-        name='add-todo'
-        placeholder='Thêm việc cần làm...'
-        elemAfterInput={
-          <Button
-            isDisabled={!textInput}
-            appearance='danger'
-            onClick={onAddBtnClick}
-          >
-            Thêm
-          </Button>
-        }
-        css={{ padding: "2px 4px 2px" }}
-        value={textInput}
-        onChange={onTextInputChange}
-      ></Textfield> */}
       <TodoList todoList={todoList} 
       onCheckBtnClick={onCheckBtnClick} 
       onRemoveBtnClick={onRemoveBtnClick} 

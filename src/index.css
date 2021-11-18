@@ -173,10 +173,11 @@ box-shadow: 1px 1px 5px rgb(0 0 0 / 40%);
     width: 100%;
     color: #000;
     cursor: text;
+    text-align: left;
 }
 
 .checklist-editor .task-title-group{
-  position: relative;
+    position: relative;
     display: inline-block;
     margin-top: 25px;
     margin-bottom: 25px;
@@ -187,6 +188,7 @@ box-shadow: 1px 1px 5px rgb(0 0 0 / 40%);
     cursor: text;
     font-family: "Playfair Display",Georgia,Cambria,Times New Roman,Times,serif;
     font-weight: bold;
+    text-align: left;
 }
 
 .checklist-editor .task .move-icon, .checklist-editor .task-group .move-icon {
@@ -217,6 +219,7 @@ box-shadow: 1px 1px 5px rgb(0 0 0 / 40%);
   text-decoration: none;
   line-height: 30px;
   text-align: center;
+
 }
 
 .css-16kktwg{
@@ -229,10 +232,8 @@ svg{
 
 }
 
-
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .css-7no60z-ButtonBase{
