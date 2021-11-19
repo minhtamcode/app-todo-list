@@ -3,12 +3,13 @@ import Textfield from "@atlaskit/textfield";
 import Button from "@atlaskit/button";
 import { useCallback, useState, useEffect } from "react";
 import { v4 } from "uuid";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { ReactComponent as Hamburger } from "./hamburger.svg";
 
 const TODO_APP_STORAGE_KEY = "TODO_APP";
 
 function App() {
   const [todoList, setTodoList] = useState([]);
+
 
   useEffect(() => {
     const storagedTodoList = localStorage.getItem(TODO_APP_STORAGE_KEY);
@@ -22,11 +23,6 @@ function App() {
   }, [todoList]);
 
 
-  const onDragEnd = ({oldIndex, newIndex}) => {
-    this.setState(({todo}) => ({
-      todoList: (todo, oldIndex, newIndex),
-    }));
-  };
 
   const onAddBtnClickGroup = useCallback(
     (e) => {
@@ -91,19 +87,60 @@ function App() {
       setTodoList(prevState => prevState.map(todo => todo.id === id ? {...todo, name:name } : todo))
   });
 
+  const onDragStart = useState((e, index) => {
+    const draggedItem = [];
+    draggedItem = todoList[index];
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", e.target.parentNode);
+    e.dataTransfer.setDragImage(e.target.parentNode, 20, 20);
+  });
+
+  const onDragOver  = useState((e, index) => {
+    e.preventDefault();
+    const draggedOverItem = todoList[index];
+
+    // if the item is dragged over itself, ignore
+    if (this.draggedItem === draggedOverItem) {
+      return;
+    }
+
+    // filter out the currently dragged item
+    let todoList = todoList.filter(todo => todo !== this.draggedItem);
+
+    // add the dragged item after the dragged over item
+    todoList.splice(index, 0, this.draggedItem);
+
+    this.setState({ todoList });
+  });
+
+  const onDragEnd = () => {
+    this.draggedItem = null;
+  };
+
   return (
     <>
     <div className="checklist">
     <div className="checklist-editor">
     <h2>Checkliste Hochzeit</h2>
       <div className="checklist-content">
-      <TodoList todoList={todoList} 
-      onCheckBtnClick={onCheckBtnClick} 
-      onRemoveBtnClick={onRemoveBtnClick} 
-      onUnCheckBtnClick={onUnCheckBtnClick} 
-      onInputCompleted={onInputCompleted} 
-      onInputStartEditor={onInputStartEditor}
-      onTaskChange={onTaskChange}/>
+      <ul onDragOver={(e) => e.preventDefault}>
+            {this.state.todoList.map((todo, idx) => (
+              <li key={todo} onDragOver={(e) => this.onDragOver(e, idx)}>
+                <TodoList todoList={todoList} 
+                onCheckBtnClick={onCheckBtnClick} 
+                onRemoveBtnClick={onRemoveBtnClick} 
+                onUnCheckBtnClick={onUnCheckBtnClick} 
+                onInputCompleted={onInputCompleted} 
+                onInputStartEditor={onInputStartEditor}
+                onTaskChange={onTaskChange}
+                draggable
+                onDragStart={e => this.onDragStart(e, idx)}
+                onDragEnd={this.onDragEnd}/>
+                <Hamburger />              
+                <span className="content">{todo}</span>
+              </li>
+            ))}
+          </ul>
     </div>
     <div className="controls">
       <Button
